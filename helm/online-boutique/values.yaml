@@ -1,0 +1,44 @@
+frontend:
+  create: true
+  externalService: false
+  platform: local
+  cymbalBranding: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+loadGenerator:
+  create: true
+  checkFrontendInitContainer: true
+  resources:
+    requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+cartDatabase:
+  type: redis
+  connectionString: "redis-cart:6379"
+  inClusterRedis:
+    create: true
+    publicRepository: true
+
+googleCloudOperations:
+  profiler: false
+  tracing: false
+  metrics: false
+
+opentelemetryCollector:
+  create: false
+
+securityContext:
+  enable: true
+
+networkPolicies:
+  create: false

@@ -1,0 +1,55 @@
+crds:
+  enabled: true
+
+nodeSelector:
+  purpose: infra
+tolerations:
+  - key: purpose
+    value: infra
+    effect: NoSchedule
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+webhook:
+  nodeSelector:
+    purpose: infra
+  tolerations:
+    - key: purpose
+      value: infra
+      effect: NoSchedule
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi
+
+cainjector:
+  nodeSelector:
+    purpose: infra
+  tolerations:
+    - key: purpose
+      value: infra
+      effect: NoSchedule
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: false # flip to true when kube-prometheus-stack is deployed
+
+global:
+  logLevel: 2
