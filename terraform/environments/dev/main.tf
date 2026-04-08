@@ -65,7 +65,7 @@ module "gh_oidc" {
   project_id          = var.gcp_project_id
   pool_id             = "github-pool"
   provider_id         = "github-provider"
-  attribute_condition = "assertion.repository == 'verggy/gcp-k8s-platform'"
+  attribute_condition = "assertion.repository == 'Verggy/gcp-k8s-platform'"
   sa_mapping = {
     "terraform" = {
       sa_name   = "projects/${var.gcp_project_id}/serviceAccounts/terraform@${var.gcp_project_id}.iam.gserviceaccount.com"

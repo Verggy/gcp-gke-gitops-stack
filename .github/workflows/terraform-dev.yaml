@@ -39,6 +39,8 @@ jobs:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER_DEV }}
           service_account: ${{ secrets.WIF_SERVICE_ACCOUNT_DEV }}
 
+      - uses: google-github-actions/setup-gcloud@v2
+
       - uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
