@@ -73,7 +73,7 @@ sleep 10 # gcp needs some time to create account
 
 echo "[5/5] Assigning IAM roles..."
 for PROJECT_ID in $DEV_PROJECT_ID $PROD_PROJECT_ID; do
-  for ROLE in roles/editor roles/iam.serviceAccountAdmin roles/resourcemanager.projectIamAdmin; do
+  for ROLE in roles/editor roles/iam.serviceAccountAdmin roles/resourcemanager.projectIamAdmin roles/iam.workloadIdentityPoolAdmin; do
     gcloud projects add-iam-policy-binding $PROJECT_ID \
       --member="serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com" \
       --role=$ROLE \
