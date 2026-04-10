@@ -45,11 +45,13 @@ DEV_PROJECT_ID="platform-dev-$(openssl rand -hex 4)"
 PROD_PROJECT_ID="platform-prod-$(openssl rand -hex 4)"
 CURRENT_USER=$(gcloud config get-value account)
 TERRAFORM_SA_ROLES=(
-  roles/editor
+  roles/compute.networkAdmin
+  roles/container.admin
   roles/iam.serviceAccountAdmin
   roles/resourcemanager.projectIamAdmin
   roles/iam.workloadIdentityPoolAdmin
-  roles/secretmanager.secretAccessor
+  roles/serviceusage.serviceUsageAdmin
+  roles/secretmanager.admin
 )
 
 echo "[1/5] Creating projects..."
