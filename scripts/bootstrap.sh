@@ -48,6 +48,7 @@ TERRAFORM_SA_ROLES=(
   roles/compute.networkAdmin
   roles/container.admin
   roles/iam.serviceAccountAdmin
+  roles/iam.serviceAccountUser
   roles/resourcemanager.projectIamAdmin
   roles/iam.workloadIdentityPoolAdmin
   roles/serviceusage.serviceUsageAdmin
