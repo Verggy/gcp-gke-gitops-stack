@@ -1,10 +1,10 @@
 environments:
   dev:
     values:
-      - environments/dev.yaml
+      - environment-values/dev.yaml
   prod:
     values:
-      - environments/prod.yaml
+      - environment-values/prod.yaml
 ---
 repositories:
   - name: external-secrets
@@ -63,6 +63,14 @@ releases:
           - "apply"
           - "-f"
           - "helm/cert-manager/cluster-issuer.yaml"
+      - events: ["postsync"]
+        showlogs: true
+        command: "kubectl"
+        args:
+          - "wait"
+          - "--for=condition=Ready"
+          - "clustersecretstore/gcp-secret-manager"
+          - "--timeout=60s"
 
   - name: cert-manager-secrets
     namespace: cert-manager
@@ -105,3 +113,21 @@ releases:
       - cert-manager/cert-manager
     values:
       - helm/argocd/values.yaml.gotmpl
+
+  - name: argocd-bootstrap
+    namespace: argocd
+    chart: helm/argocd/bootstrap
+    wait: true
+    needs:
+      - argocd/argocd-secrets
+      - argocd/argocd
+    values:
+      - helm/argocd/bootstrap/repo.yaml.gotmpl
+    hooks:
+      - events: ["presync"]
+        command: "kubectl"
+        args:
+          - "wait"
+          - "--for=condition=Established"
+          - "crd/applications.argoproj.io"
+          - "--timeout=60s"
