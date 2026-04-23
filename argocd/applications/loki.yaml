@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: loki
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+  template:
+    metadata:
+      name: loki
+    spec:
+      project: default
+      sources:
+        - repoURL: "https://grafana.github.io/helm-charts"
+          chart: loki
+          targetRevision: "6.55.0"
+          helm:
+            valueFiles:
+              - $values/helm/loki/values.yaml
+            values: |
+              loki:
+                storage:
+                  bucketNames:
+                    chunks: "{{metadata.labels.project_id}}-loki-chunks"
+                    ruler: "{{metadata.labels.project_id}}-loki-chunks"
+                    admin: "{{metadata.labels.project_id}}-loki-chunks"
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: "{{metadata.labels.env}}-loki@{{metadata.labels.project_id}}.iam.gserviceaccount.com"
+        - repoURL: "{{metadata.annotations.repo_url}}"
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: monitoring
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
