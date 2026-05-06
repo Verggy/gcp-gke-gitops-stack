@@ -61,7 +61,7 @@ module "external-secrets" {
   gcp_project_id   = var.gcp_project_id
   cloudflare_token = var.cloudflare_token
   environment      = var.environment
-  depends_on       = [google_project_service.apis]
+  depends_on       = [google_project_service.apis, module.gke]
 }
 
 module "loki" {
@@ -69,5 +69,5 @@ module "loki" {
   gcp_project_id  = var.gcp_project_id
   region          = var.region
   environment     = var.environment
-  depends_on       = [google_project_service.apis]
+  depends_on       = [google_project_service.apis, module.gke]
 }

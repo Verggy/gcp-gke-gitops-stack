@@ -1,7 +1,7 @@
 env: dev
-project_id: platform-dev-e7b0024c
-repo_url: https://github.com/Verggy/gcp-k8s-platform
-ingress_ip: "34.118.115.97"
-grafana_host: dev-grafana.terraform-portfolio.cloud
-shop_host: dev-shop.terraform-portfolio.cloud
-argocd_host: dev-argocd.terraform-portfolio.cloud
+project_id: <project_id>
+repo_url: https://github.com/<owner>/<repo_name>
+ingress_ip: "x.x.x.x"
+grafana_host: dev-grafana.<domain>
+shop_host: dev-shop.<domain>
+argocd_host: dev-argocd.<domain>

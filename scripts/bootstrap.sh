@@ -40,9 +40,9 @@ gcloud organizations describe "$ORG_ID" &>/dev/null \
 gcloud billing accounts describe "$BILLING_ACCOUNT_ID" &>/dev/null \
   || { echo "ERROR: Billing account $BILLING_ACCOUNT_ID not found or no access"; exit 1; }
 
-STATE_PROJECT_ID="platform-tf-state-$(openssl rand -hex 4)"
-DEV_PROJECT_ID="platform-dev-$(openssl rand -hex 4)"
-PROD_PROJECT_ID="platform-prod-$(openssl rand -hex 4)"
+STATE_PROJECT_ID="infra-tf-state-$(openssl rand -hex 6)"
+DEV_PROJECT_ID="infra-dev-$(openssl rand -hex 6)"
+PROD_PROJECT_ID="infra-prod-$(openssl rand -hex 6)"
 CURRENT_USER=$(gcloud config get-value account)
 TERRAFORM_SA_ROLES=(
   roles/compute.networkAdmin
@@ -72,6 +72,11 @@ gcloud storage buckets create gs://$BUCKET_NAME \
   --project=$STATE_PROJECT_ID \
   --location=EU \
   --uniform-bucket-level-access
+# wait for bucket to become available
+until gcloud storage buckets describe gs://$BUCKET_NAME &>/dev/null; do
+  echo "Waiting for bucket to be available..."
+  sleep 5
+done
 gcloud storage buckets update gs://$BUCKET_NAME --versioning
 
 echo "[4/5] Creating Terraform service accounts..."
