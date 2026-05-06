@@ -1,4 +1,4 @@
-gcp_project_id = "platform-prod-813738c6"
+gcp_project_id = "<project_id>"
 environment    = "prod"
 region         = "europe-central2"
 vpc_cidr       = "10.0.0.0/24"

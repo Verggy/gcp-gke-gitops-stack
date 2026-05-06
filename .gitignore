@@ -3,5 +3,6 @@
 # Allow non-sensitive environment tfvars
 !terraform/environments/dev/terraform.tfvars
 !terraform/environments/prod/terraform.tfvars
+!terraform/environments/foundation/terraform.tfvars
 **/.terraform*
 *.tfstate*

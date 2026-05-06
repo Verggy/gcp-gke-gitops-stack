@@ -1,4 +1,4 @@
-gcp_project_id = "platform-dev-e7b0024c"
+gcp_project_id = "<project_id>"
 environment    = "dev"
 region         = "europe-central2"
 vpc_cidr       = "10.10.0.0/24"
